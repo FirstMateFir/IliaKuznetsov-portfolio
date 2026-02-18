@@ -9,7 +9,7 @@ interface PortfolioHeaderProps {
   setLang: (lang: Lang) => void;
 }
 
-const navIds = ["experience", "education", "projects", "contact"];
+const navIds = ["timeline", "projects", "contact"];
 
 export default function PortfolioHeader({ lang, setLang }: PortfolioHeaderProps) {
   const [scrolled, setScrolled] = useState(false);
@@ -19,8 +19,6 @@ export default function PortfolioHeader({ lang, setLang }: PortfolioHeaderProps)
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 60);
-
-      // Detect active section
       const sections = navIds.map((id) => document.getElementById(id));
       let current = "";
       sections.forEach((section) => {
@@ -31,7 +29,6 @@ export default function PortfolioHeader({ lang, setLang }: PortfolioHeaderProps)
       });
       setActiveSection(current);
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -39,8 +36,7 @@ export default function PortfolioHeader({ lang, setLang }: PortfolioHeaderProps)
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const offset = 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: "smooth" });
     }
     setMenuOpen(false);
@@ -52,30 +48,24 @@ export default function PortfolioHeader({ lang, setLang }: PortfolioHeaderProps)
     <>
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
+          scrolled ? "bg-background/96 backdrop-blur-sm border-b border-border" : "bg-transparent"
         }`}
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <div className="swiss-container flex items-center justify-between h-16 md:h-20">
-          {/* Name — padded so burger never overlaps */}
+          {/* Name */}
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            className="flex items-center gap-3 group select-none"
-            style={{ paddingLeft: "0" }}
+            className="flex items-center gap-2 group select-none min-w-0"
           >
             <span
-              className="w-1 h-6 bg-primary inline-block flex-shrink-0"
-              aria-hidden="true"
-            />
-            <span
-              className="font-bold tracking-tight text-foreground"
-              style={{ fontSize: "clamp(0.95rem, 2vw, 1.1rem)", whiteSpace: "nowrap" }}
+              className="font-bold tracking-tight text-foreground whitespace-nowrap"
+              style={{ fontSize: "clamp(0.875rem, 1.8vw, 1rem)" }}
             >
-              {personalData.firstName}{" "}
-              <span className="text-primary">{personalData.lastName}</span>
+              {personalData.firstName} {personalData.lastName}
             </span>
           </a>
 
@@ -85,9 +75,9 @@ export default function PortfolioHeader({ lang, setLang }: PortfolioHeaderProps)
               <button
                 key={i}
                 onClick={() => scrollTo(navIds[i])}
-                className={`nav-item text-sm font-medium tracking-wide transition-colors duration-200 ${
+                className={`nav-item text-sm tracking-wide transition-colors duration-200 ${
                   activeSection === navIds[i]
-                    ? "text-primary"
+                    ? "text-foreground font-medium"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -96,12 +86,11 @@ export default function PortfolioHeader({ lang, setLang }: PortfolioHeaderProps)
             ))}
           </nav>
 
-          {/* Right side */}
-          <div className="flex items-center gap-4">
+          {/* Right */}
+          <div className="flex items-center gap-3 md:gap-4">
             <LanguageSwitcher lang={lang} setLang={setLang} />
-            {/* Burger — desktop hidden */}
             <button
-              className="md:hidden p-2 -mr-2 text-foreground hover:text-primary transition-colors"
+              className="md:hidden p-2 -mr-1 text-foreground hover:text-muted-foreground transition-colors"
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
             >
@@ -121,34 +110,31 @@ export default function PortfolioHeader({ lang, setLang }: PortfolioHeaderProps)
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            {/* Close button */}
-            <div className="flex justify-end p-6 pt-5">
+            <div className="flex justify-end p-5">
               <button
                 onClick={() => setMenuOpen(false)}
-                className="p-2 text-foreground hover:text-primary transition-colors"
+                className="p-2 text-foreground hover:text-muted-foreground transition-colors"
                 aria-label="Close menu"
               >
-                <X size={24} />
+                <X size={22} />
               </button>
             </div>
-
             <nav className="flex flex-col px-8 gap-0 flex-1">
               {links.map((link, i) => (
                 <motion.button
                   key={i}
                   onClick={() => scrollTo(navIds[i])}
-                  className="text-left py-5 text-2xl font-bold border-b border-border text-foreground hover:text-primary transition-colors"
+                  className="text-left py-5 text-2xl font-bold border-b border-border text-foreground hover:text-muted-foreground transition-colors"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i }}
                 >
-                  <span className="text-primary mr-2 text-base font-mono">0{i + 1}</span>
+                  <span className="text-muted-foreground mr-3 text-base font-mono">0{i + 1}</span>
                   {link}
                 </motion.button>
               ))}
             </nav>
-
-            <div className="p-8 text-muted-foreground text-sm font-mono">
+            <div className="p-8 text-muted-foreground text-xs font-mono">
               © {new Date().getFullYear()} {personalData.name}
             </div>
           </motion.div>

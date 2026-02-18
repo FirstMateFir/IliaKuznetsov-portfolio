@@ -6,62 +6,93 @@ export interface ContactItem {
   href: string;
 }
 
-export interface WorkEntry {
-  period: { en: string; de: string };
-  role: { en: string; de: string };
-  company: string;
-  location: string;
-  description: { en: string; de: string };
-  tags: string[];
+export interface TimelineEntry {
+  year: string;
+  title: { en: string; de: string };
+  organization: string;
+  type: "work" | "education";
 }
 
-export interface EducationEntry {
-  period: { en: string; de: string };
-  degree: { en: string; de: string };
-  institution: string;
-  location: string;
-  description: { en: string; de: string };
+export interface TeamMember {
+  role: { en: string; de: string };
+  name: string;
 }
 
 export interface ProjectItem {
   id: number;
-  title: string;
-  category: { en: string; de: string };
-  description: { en: string; de: string };
-  tags: string[];
   year: string;
-  imagePrompt: string;
+  title: string;
+  role: { en: string; de: string };
+  description: { en: string; de: string };
+  myRole: { en: string; de: string };
+  team: TeamMember[];
+  images: string[]; // placeholder image descriptions or paths
+}
+
+export interface LanguageProficiency {
+  language: { en: string; de: string };
+  level: string;
+  note: { en: string; de: string };
+}
+
+export const BIRTH_DATE = new Date(2001, 0, 5); // 05.01.2001
+
+export function calculateAge(): number {
+  const today = new Date();
+  let age = today.getFullYear() - BIRTH_DATE.getFullYear();
+  const m = today.getMonth() - BIRTH_DATE.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < BIRTH_DATE.getDate())) age--;
+  return age;
 }
 
 export const personalData = {
   name: "Ilia Kuznetsov",
   firstName: "Ilia",
   lastName: "Kuznetsov",
+  birthDate: "05.01.2001",
   title: {
-    en: "UI/UX Designer & Digital Project Manager",
-    de: "UI/UX Designer & Digitaler Projektmanager",
+    en: "Theatre Manager & Producer",
+    de: "Theaterleiter & Produzent",
   },
   tagline: {
-    en: "Crafting purposeful digital experiences at the intersection of design thinking and strategic delivery.",
-    de: "Zweckorientierte digitale Erlebnisse an der Schnittstelle von Design-Thinking und strategischer Umsetzung.",
+    en: "Shaping live performance at the intersection of artistic vision and operational precision.",
+    de: "Lebendige Aufführungen an der Schnittstelle von künstlerischer Vision und operativer Präzision.",
   },
-  location: "Zurich, Switzerland",
+  location: "Berlin, Germany",
   availability: {
-    en: "Available for freelance & full-time",
-    de: "Verfügbar für Freelance & Vollzeit",
+    en: "Open to collaborations",
+    de: "Offen für Zusammenarbeit",
   },
 };
+
+export const languageProficiencies: LanguageProficiency[] = [
+  {
+    language: { en: "Russian", de: "Russisch" },
+    level: "Native",
+    note: { en: "Mother tongue", de: "Muttersprache" },
+  },
+  {
+    language: { en: "English", de: "Englisch" },
+    level: "B2",
+    note: { en: "Upper Intermediate", de: "Obere Mittelstufe" },
+  },
+  {
+    language: { en: "German", de: "Deutsch" },
+    level: "A2",
+    note: { en: "Elementary", de: "Grundkenntnisse" },
+  },
+];
 
 export const contacts: ContactItem[] = [
   {
     type: "email",
-    label: "hello@iliakuznetsov.com",
-    href: "mailto:hello@iliakuznetsov.com",
+    label: "ilia@kuznetsov-theatre.com",
+    href: "mailto:ilia@kuznetsov-theatre.com",
   },
   {
     type: "phone",
-    label: "+41 79 000 00 00",
-    href: "tel:+41790000000",
+    label: "+49 30 000 00 00",
+    href: "tel:+4930000000",
   },
   {
     type: "telegram",
@@ -76,430 +107,363 @@ export const contacts: ContactItem[] = [
   {
     type: "whatsapp",
     label: "WhatsApp",
-    href: "https://wa.me/41790000000",
+    href: "https://wa.me/4930000000",
   },
 ];
 
 export const navLinks = {
-  en: ["Experience", "Education", "Projects", "Contact"],
-  de: ["Erfahrung", "Ausbildung", "Projekte", "Kontakt"],
+  en: ["Timeline", "Projects", "Contact"],
+  de: ["Zeitlinie", "Projekte", "Kontakt"],
 };
 
 export const sectionTitles = {
-  experience: { en: "Work Experience", de: "Berufserfahrung" },
-  education: { en: "Education", de: "Ausbildung" },
-  projects: { en: "Selected Projects", de: "Ausgewählte Projekte" },
-  contact: { en: "Get In Touch", de: "Kontakt" },
+  timeline: { en: "Professional Timeline", de: "Berufliche Zeitlinie" },
+  projects: { en: "Selected Productions", de: "Ausgewählte Produktionen" },
+  contact: { en: "Get In Touch", de: "Kontakt aufnehmen" },
 };
 
-export const workExperience: WorkEntry[] = [
+// Unified timeline: work + education merged by year (descending)
+export const timeline: TimelineEntry[] = [
   {
-    period: { en: "2023 – Present", de: "2023 – Heute" },
-    role: { en: "Senior UI/UX Designer", de: "Senior UI/UX Designer" },
-    company: "Accenture Switzerland",
-    location: "Zurich, CH",
-    description: {
-      en: "Leading UX strategy and design systems for enterprise-scale digital transformation projects. Facilitated design sprints with cross-functional teams of 15+ members.",
-      de: "Leitung der UX-Strategie und Design-Systeme für digitale Transformationsprojekte in Unternehmensgröße. Durchführung von Design-Sprints mit funktionsübergreifenden Teams.",
-    },
-    tags: ["Figma", "Design Systems", "Agile", "Stakeholder Management"],
+    year: "2024",
+    title: { en: "Artistic Director", de: "Künstlerischer Leiter" },
+    organization: "Residenztheater München",
+    type: "work",
   },
   {
-    period: { en: "2022 – 2023", de: "2022 – 2023" },
-    role: { en: "Digital Project Manager", de: "Digitaler Projektmanager" },
-    company: "SBB CFF FFS",
-    location: "Bern, CH",
-    description: {
-      en: "Managed the digital ticketing platform overhaul serving 1.3M daily users. Coordinated delivery roadmaps with engineering, product, and marketing departments.",
-      de: "Management der digitalen Ticketing-Plattform für 1,3 Mio. tägliche Nutzer. Koordination von Roadmaps mit Engineering, Produkt und Marketing.",
-    },
-    tags: ["Project Management", "Scrum", "JIRA", "Stakeholders"],
+    year: "2023",
+    title: { en: "Executive Producer — Autumn Season", de: "Ausführender Produzent — Herbstsaison" },
+    organization: "Berliner Ensemble",
+    type: "work",
   },
   {
-    period: { en: "2021 – 2022", de: "2021 – 2022" },
-    role: { en: "Product Designer", de: "Produktdesigner" },
-    company: "Zurich Insurance Group",
-    location: "Zurich, CH",
-    description: {
-      en: "Redesigned the customer-facing insurance portal, improving conversion rates by 34%. Led accessibility audit ensuring WCAG 2.1 AA compliance.",
-      de: "Neugestaltung des Kundenportals für Versicherungen mit 34% Konversionssteigerung. Durchführung von Accessibility-Audits gemäß WCAG 2.1 AA.",
-    },
-    tags: ["UX Research", "Prototyping", "Accessibility", "Insurance"],
+    year: "2023",
+    title: { en: "Production Manager — International Tour", de: "Produktionsleiter — Internationale Tournee" },
+    organization: "Schaubühne Berlin",
+    type: "work",
   },
   {
-    period: { en: "2020 – 2021", de: "2020 – 2021" },
-    role: { en: "UX Designer", de: "UX Designer" },
-    company: "Swisscom AG",
-    location: "Bern, CH",
-    description: {
-      en: "Contributed to the Swisscom TV app redesign for iOS and Android. Conducted 40+ user interviews and synthesized insights into actionable design improvements.",
-      de: "Mitarbeit am Redesign der Swisscom TV-App für iOS und Android. Durchführung von 40+ Nutzerinterviews und Ableitung von Design-Verbesserungen.",
-    },
-    tags: ["Mobile UX", "User Research", "iOS", "Android"],
+    year: "2022",
+    title: { en: "Theatre Manager — Resident Company", de: "Theaterleiter — Residenzensemble" },
+    organization: "Deutsches Theater Berlin",
+    type: "work",
   },
   {
-    period: { en: "2020", de: "2020" },
-    role: { en: "Interaction Designer (Contract)", de: "Interaction Designer (Auftrag)" },
-    company: "ABB Ltd.",
-    location: "Baden, CH",
-    description: {
-      en: "Designed industrial HMI dashboards for factory automation systems. Created component libraries and interaction patterns for complex data visualization.",
-      de: "Design industrieller HMI-Dashboards für Fabrikautomationssysteme. Erstellung von Komponentenbibliotheken für komplexe Datenvisualisierung.",
-    },
-    tags: ["HMI Design", "Industrial UX", "Data Visualization"],
+    year: "2022",
+    title: { en: "Festival Coordinator", de: "Festivalkoordinator" },
+    organization: "Theatertreffen Berlin",
+    type: "work",
   },
   {
-    period: { en: "2019 – 2020", de: "2019 – 2020" },
-    role: { en: "Junior Product Designer", de: "Junior Produktdesigner" },
-    company: "Ergon Informatik AG",
-    location: "Zurich, CH",
-    description: {
-      en: "Built interactive prototypes for B2B SaaS products across healthcare and logistics verticals. Supported senior designers in client workshops and usability testing.",
-      de: "Erstellung interaktiver Prototypen für B2B-SaaS-Produkte in Gesundheits- und Logistikbereichen.",
-    },
-    tags: ["Prototyping", "B2B SaaS", "Healthcare", "Logistics"],
+    year: "2021",
+    title: { en: "Junior Producer", de: "Junior Produzent" },
+    organization: "HAU Hebbel am Ufer",
+    type: "work",
   },
   {
-    period: { en: "2019", de: "2019" },
-    role: { en: "UI Designer (Intern)", de: "UI Designer (Praktikum)" },
-    company: "Zühlke Engineering",
-    location: "Schlieren, CH",
-    description: {
-      en: "Assisted in the creation of high-fidelity UI mockups for automotive and medtech clients. Maintained Sketch-based design libraries and style guides.",
-      de: "Unterstützung bei der Erstellung von UI-Mockups für Automotive- und Medtech-Kunden.",
-    },
-    tags: ["Sketch", "UI Mockups", "Automotive", "MedTech"],
+    year: "2021",
+    title: { en: "BA Theatre Studies & Management", de: "BA Theaterwissenschaften & Management" },
+    organization: "Freie Universität Berlin",
+    type: "education",
   },
   {
-    period: { en: "2018 – 2019", de: "2018 – 2019" },
-    role: { en: "Visual Designer", de: "Visueller Gestalter" },
-    company: "TBWA\\Zurich",
-    location: "Zurich, CH",
-    description: {
-      en: "Developed brand identity systems and digital campaign assets for FMCG, automotive, and luxury clients. Collaborated with copywriters and art directors.",
-      de: "Entwicklung von Markenidentitätssystemen und digitalen Kampagnen-Assets für FMCG-, Automobil- und Luxuskunden.",
-    },
-    tags: ["Branding", "Digital Campaigns", "Art Direction"],
+    year: "2020",
+    title: { en: "Production Assistant — Main Stage", de: "Produktionsassistent — Hauptbühne" },
+    organization: "Volksbühne Berlin",
+    type: "work",
   },
   {
-    period: { en: "2018", de: "2018" },
-    role: { en: "Freelance Web Designer", de: "Freiberuflicher Webdesigner" },
-    company: "Self-Employed",
-    location: "Remote",
-    description: {
-      en: "Designed and developed responsive websites for small businesses and cultural institutions. Delivered 12 projects using WordPress, Webflow, and custom HTML/CSS.",
-      de: "Design und Entwicklung responsiver Websites für Kleinunternehmen und Kulturinstitutionen.",
-    },
-    tags: ["Webflow", "WordPress", "HTML/CSS", "Freelance"],
+    year: "2020",
+    title: { en: "Stage Management Intern", de: "Inspizienz Praktikum" },
+    organization: "Staatsoper Unter den Linden",
+    type: "work",
   },
   {
-    period: { en: "2017 – 2018", de: "2017 – 2018" },
-    role: { en: "Graphic & Motion Designer", de: "Grafik- & Motiondesigner" },
-    company: "Ringier AG",
-    location: "Zurich, CH",
-    description: {
-      en: "Created motion graphics and editorial illustrations for Blick and other Ringier digital media properties. Produced 200+ animated assets across social platforms.",
-      de: "Erstellung von Motion Graphics und redaktionellen Illustrationen für Blick und andere Ringier-Digitalmedien.",
-    },
-    tags: ["Motion Design", "After Effects", "Editorial", "Social Media"],
+    year: "2019",
+    title: { en: "Production Coordinator", de: "Produktionskoordinator" },
+    organization: "Theater Neuköln",
+    type: "work",
   },
   {
-    period: { en: "2017", de: "2017" },
-    role: { en: "UX Research Assistant", de: "UX Research Assistent" },
-    company: "ETH Zurich — D-ARCH",
-    location: "Zurich, CH",
-    description: {
-      en: "Supported research into human-computer interaction for spatial computing environments. Conducted literature reviews and participant recruitment for lab studies.",
-      de: "Unterstützung der HCI-Forschung für räumliche Rechenumgebungen. Durchführung von Literaturrecherchen und Probandenwerbung.",
-    },
-    tags: ["HCI Research", "Spatial Computing", "Academic"],
+    year: "2019",
+    title: { en: "Workshop: Theatre Producing", de: "Workshop: Theaterproduzieren" },
+    organization: "IETM — Brussels",
+    type: "education",
   },
   {
-    period: { en: "2016 – 2017", de: "2016 – 2017" },
-    role: { en: "Digital Marketing Specialist", de: "Digital Marketing Spezialist" },
-    company: "Migros-Genossenschafts-Bund",
-    location: "Zurich, CH",
-    description: {
-      en: "Managed social media channels and digital advertising for Migros Online. A/B tested landing pages and optimized conversion funnels, resulting in 22% uplift in engagement.",
-      de: "Verwaltung von Social-Media-Kanälen und digitaler Werbung für Migros Online mit 22% Engagement-Steigerung.",
-    },
-    tags: ["Digital Marketing", "A/B Testing", "Social Media", "E-Commerce"],
+    year: "2018",
+    title: { en: "Event & Venue Manager", de: "Veranstaltungs- & Venue-Manager" },
+    organization: "Sophiensaele Berlin",
+    type: "work",
   },
   {
-    period: { en: "2016", de: "2016" },
-    role: { en: "Brand Consultant (Contract)", de: "Markenberater (Auftrag)" },
-    company: "Publicis Groupe Switzerland",
-    location: "Geneva, CH",
-    description: {
-      en: "Advised on brand positioning and visual identity for three luxury hospitality clients. Delivered brand guidelines and tone-of-voice documentation.",
-      de: "Beratung zur Markenpositionierung und visuellen Identität für drei Luxus-Hospitality-Kunden.",
-    },
-    tags: ["Brand Strategy", "Luxury", "Hospitality", "Consulting"],
+    year: "2018",
+    title: { en: "Cultural Management Certificate", de: "Zertifikat Kulturmanagement" },
+    organization: "Humboldt-Universität zu Berlin",
+    type: "education",
   },
   {
-    period: { en: "2015 – 2016", de: "2015 – 2016" },
-    role: { en: "Product Manager (Associate)", de: "Produktmanager (Assistent)" },
-    company: "tx.group (formerly Tamedia)",
-    location: "Zurich, CH",
-    description: {
-      en: "Supported roadmap planning for digital news products serving 5M+ monthly readers. Wrote product requirements and coordinated with development squads.",
-      de: "Unterstützung der Roadmap-Planung für digitale Nachrichtenprodukte mit 5M+ monatlichen Lesern.",
-    },
-    tags: ["Product Management", "News Media", "Roadmapping"],
+    year: "2017",
+    title: { en: "Assistant Producer", de: "Assistent Produzent" },
+    organization: "Maxim Gorki Theater",
+    type: "work",
   },
   {
-    period: { en: "2015", de: "2015" },
-    role: { en: "UX Designer (Contract)", de: "UX Designer (Auftrag)" },
-    company: "PostFinance AG",
-    location: "Bern, CH",
-    description: {
-      en: "Redesigned core banking flows including account overview and payment initiation. Delivered wireframes and usability test reports for the PostFinance App v3.",
-      de: "Neugestaltung von Kernbankprozessen und Lieferung von Wireframes für die PostFinance App v3.",
-    },
-    tags: ["FinTech", "Banking UX", "Wireframing", "Usability Testing"],
+    year: "2017",
+    title: { en: "Touring Production Manager", de: "Tournee-Produktionsleiter" },
+    organization: "She She Pop — Berlin",
+    type: "work",
   },
   {
-    period: { en: "2014 – 2015", de: "2014 – 2015" },
-    role: { en: "Web Developer & Designer", de: "Webentwickler & Designer" },
-    company: "Namics AG",
-    location: "St. Gallen, CH",
-    description: {
-      en: "Built front-end experiences for corporate websites using HTML5, CSS3, and JavaScript. Collaborated with UX designers to implement pixel-perfect interfaces.",
-      de: "Entwicklung von Frontend-Erlebnissen für Unternehmenswebsites mit HTML5, CSS3 und JavaScript.",
-    },
-    tags: ["Front-End Development", "HTML5", "CSS3", "JavaScript"],
+    year: "2016",
+    title: { en: "Technical Stage Coordinator", de: "Technischer Bühnenkoordinator" },
+    organization: "Hebbel am Ufer (HAU2)",
+    type: "work",
   },
   {
-    period: { en: "2014", de: "2014" },
-    role: { en: "Design Intern", de: "Design Praktikant" },
-    company: "Büro Destruct",
-    location: "Bern, CH",
-    description: {
-      en: "Worked at the legendary Swiss design studio on print, identity, and web projects. Absorbed Swiss typographic tradition and grid-based layout principles.",
-      de: "Arbeit im legendären Schweizer Designstudio an Print-, Identitäts- und Webprojekten. Einarbeitung in Schweizer Typografie-Tradition.",
-    },
-    tags: ["Print Design", "Typography", "Identity", "Swiss Design"],
+    year: "2016",
+    title: { en: "Audience Development Specialist", de: "Spezialist Publikumsentwicklung" },
+    organization: "Ruhrtriennale",
+    type: "work",
   },
   {
-    period: { en: "2013 – 2014", de: "2013 – 2014" },
-    role: { en: "Junior Graphic Designer", de: "Junior Grafikdesigner" },
-    company: "Ogilvy Switzerland",
-    location: "Zurich, CH",
-    description: {
-      en: "Produced integrated campaign materials across digital, print, and OOH for multinational clients. Participated in creative concepting sessions and client presentations.",
-      de: "Erstellung integrierter Kampagnenmaterialien für multinationale Kunden. Teilnahme an kreativen Konzeptsitzungen.",
-    },
-    tags: ["Advertising", "Integrated Campaigns", "OOH", "Print"],
+    year: "2015",
+    title: { en: "Dramaturgy Assistant", de: "Dramaturgie-Assistent" },
+    organization: "Münchner Kammerspiele",
+    type: "work",
   },
   {
-    period: { en: "2013", de: "2013" },
-    role: { en: "Freelance Illustrator", de: "Freiberuflicher Illustrator" },
-    company: "Various Clients",
-    location: "Zurich, CH",
-    description: {
-      en: "Created editorial illustrations for Swiss-German magazines and cultural institutions. Developed a distinctive vector-based illustration style employed across 30+ projects.",
-      de: "Erstellung redaktioneller Illustrationen für Schweizer Zeitschriften und Kulturinstitutionen.",
-    },
-    tags: ["Illustration", "Editorial", "Vector Art"],
+    year: "2015",
+    title: { en: "Front-of-House Manager", de: "Einlassleiter" },
+    organization: "Thalia Theater Hamburg",
+    type: "work",
   },
   {
-    period: { en: "2012 – 2013", de: "2012 – 2013" },
-    role: { en: "Communications Assistant", de: "Kommunikationsassistent" },
-    company: "Stadt Zurich — Kulturamt",
-    location: "Zurich, CH",
-    description: {
-      en: "Supported the city's cultural department in designing event collateral, newsletters, and social media content for public arts programming.",
-      de: "Unterstützung der Kulturabteilung bei der Gestaltung von Veranstaltungsmaterialien und Social-Media-Inhalten.",
-    },
-    tags: ["Public Sector", "Communications", "Event Design"],
+    year: "2014",
+    title: { en: "Production Intern", de: "Produktions-Praktikant" },
+    organization: "Schauspielhaus Zürich",
+    type: "work",
   },
   {
-    period: { en: "2011 – 2012", de: "2011 – 2012" },
-    role: { en: "Graphic Design Student Assistant", de: "Grafik-Design Studentenassistent" },
-    company: "Zürcher Hochschule der Künste (ZHdK)",
-    location: "Zurich, CH",
-    description: {
-      en: "Assisted professors in the Visual Communication department with workshop preparation, student portfolio reviews, and annual exhibition coordination.",
-      de: "Unterstützung der Professoren der Visuellen Kommunikation bei Workshops und jährlichen Ausstellungen.",
-    },
-    tags: ["Academic", "Visual Communication", "Teaching Support"],
-  },
-];
-
-export const education: EducationEntry[] = [
-  {
-    period: { en: "2010 – 2014", de: "2010 – 2014" },
-    degree: {
-      en: "BA Visual Communication",
-      de: "BA Visuelle Kommunikation",
-    },
-    institution: "Zürcher Hochschule der Künste (ZHdK)",
-    location: "Zurich, CH",
-    description: {
-      en: "Major in Digital Media Design with a focus on interaction design, typography, and Swiss visual tradition. Graduated with distinction.",
-      de: "Schwerpunkt Digitales Mediendesign mit Fokus auf Interaktionsdesign und Typografie. Abschluss mit Auszeichnung.",
-    },
-  },
-  {
-    period: { en: "2016", de: "2016" },
-    degree: {
-      en: "Certificate in UX Design",
-      de: "Zertifikat UX Design",
-    },
-    institution: "Nielsen Norman Group",
-    location: "Online / USA",
-    description: {
-      en: "Completed 4 specialty certificates covering UX Research, Interaction Design, UX Management, and Human-Computer Interaction.",
-      de: "Abschluss von 4 Spezialseminar-Zertifikaten zu UX Research, Interaktionsdesign, UX-Management und HCI.",
-    },
-  },
-  {
-    period: { en: "2018", de: "2018" },
-    degree: {
-      en: "PMP® Project Management Professional",
-      de: "PMP® Projektmanagement Professional",
-    },
-    institution: "Project Management Institute (PMI)",
-    location: "Online",
-    description: {
-      en: "Internationally recognized project management certification covering risk, scope, cost, and stakeholder management frameworks.",
-      de: "International anerkannte Projektmanagement-Zertifizierung für Risiko-, Umfangs-, Kosten- und Stakeholder-Management.",
-    },
-  },
-  {
-    period: { en: "2020", de: "2020" },
-    degree: {
-      en: "Google UX Design Certificate",
-      de: "Google UX Design Zertifikat",
-    },
-    institution: "Google / Coursera",
-    location: "Online",
-    description: {
-      en: "Professional certificate covering the full UX design process from empathize to prototype and test, with hands-on projects.",
-      de: "Professionelles Zertifikat für den vollständigen UX-Designprozess mit praktischen Projekten.",
-    },
+    year: "2014",
+    title: { en: "Volunteer Programme Coordinator", de: "Freiwilligenprogramm-Koordinator" },
+    organization: "Theater der Welt Festival",
+    type: "work",
   },
 ];
 
 export const projects: ProjectItem[] = [
   {
     id: 1,
-    title: "Helio Finance App",
-    category: { en: "Mobile Banking UX", de: "Mobile Banking UX" },
-    description: {
-      en: "End-to-end redesign of a neo-banking mobile application. Simplified onboarding from 12 to 4 steps, boosting activation rates by 41%.",
-      de: "End-to-End-Redesign einer Neo-Banking-App. Vereinfachung des Onboardings von 12 auf 4 Schritte mit 41% Aktivierungssteigerung.",
-    },
-    tags: ["Mobile UX", "FinTech", "Figma", "iOS"],
     year: "2024",
-    imagePrompt: "Swiss minimalist mobile banking app UI, clean white interface, red accents, typography, professional fintech design",
+    title: "Der Untergang",
+    role: { en: "Producer & Manager", de: "Produzent & Manager" },
+    description: {
+      en: "A large-scale adaptation of the fall of a dynasty, staged across three acts with a cast of 24. Premiered at Residenztheater München to critical acclaim and a sold-out run of 18 performances.",
+      de: "Eine großangelegte Adaption des Falls einer Dynastie, in drei Akten mit 24 Darstellern. Uraufführung am Residenztheater München mit ausverkauften 18 Vorstellungen.",
+    },
+    myRole: {
+      en: "Full production management: budgeting (€340,000), team assembly, venue coordination, press relations, and overseeing a 14-week rehearsal period.",
+      de: "Vollständiges Produktionsmanagement: Budgetierung (340.000 €), Teamaufbau, Venue-Koordination, Pressearbeit und Leitung der 14-wöchigen Probenphase.",
+    },
+    team: [
+      { role: { en: "Director", de: "Regisseur" }, name: "Markus Heinemann" },
+      { role: { en: "Set Designer", de: "Bühnenbildner" }, name: "Sofia Bracht" },
+      { role: { en: "Costume Designer", de: "Kostümbildnerin" }, name: "Anna Weil" },
+      { role: { en: "Composer", de: "Komponist" }, name: "Lars Kettner" },
+      { role: { en: "Lead Actor", de: "Hauptdarsteller" }, name: "Thomas Grünberg" },
+      { role: { en: "Lead Actress", de: "Hauptdarstellerin" }, name: "Eva Kirchner" },
+    ],
+    images: ["project-1.jpg", "project-2.jpg", "project-3.jpg"],
   },
   {
     id: 2,
-    title: "Meridian Design System",
-    category: { en: "Design System", de: "Design System" },
-    description: {
-      en: "Comprehensive enterprise design system with 400+ components across 6 product lines. Reduced design-to-dev handoff time by 60%.",
-      de: "Umfassendes Enterprise Design System mit 400+ Komponenten für 6 Produktlinien. 60% weniger Übergabezeit.",
-    },
-    tags: ["Design Systems", "Figma", "Storybook", "Tokens"],
     year: "2023",
-    imagePrompt: "Design system component library UI, clean grid layout, color tokens, minimal Swiss design, professional",
+    title: "Leere Räume / Empty Spaces",
+    role: { en: "Executive Producer", de: "Ausführender Produzent" },
+    description: {
+      en: "An immersive performance installation exploring themes of absence and memory. Audiences moved through ten distinct rooms, each with a unique scene. Presented at Berliner Ensemble as part of the Autumn Season.",
+      de: "Eine immersive Aufführungsinstallation über Abwesenheit und Erinnerung. Das Publikum bewegte sich durch zehn Räume, je mit einer eigenen Szene. Im Berliner Ensemble als Teil der Herbstsaison.",
+    },
+    myRole: {
+      en: "Secured co-production funding from three cultural foundations, coordinated spatial design with four independent artists, and managed audience flow logistics.",
+      de: "Sicherung von Kofinanzierungen aus drei Kulturstiftungen, Koordination der Raumgestaltung mit vier Künstlern, Logistik des Publikumsflusses.",
+    },
+    team: [
+      { role: { en: "Concept & Direction", de: "Konzept & Regie" }, name: "Nora Fischbach" },
+      { role: { en: "Visual Artist", de: "Bildende Künstlerin" }, name: "Mia Stein" },
+      { role: { en: "Sound Designer", de: "Klangregie" }, name: "Björn Kessler" },
+      { role: { en: "Performer", de: "Performerin" }, name: "Laila Osei" },
+      { role: { en: "Performer", de: "Performer" }, name: "David Vogt" },
+    ],
+    images: ["project-4.jpg", "project-5.jpg", "project-6.jpg"],
   },
   {
     id: 3,
-    title: "Bergpass Wayfinding",
-    category: { en: "Spatial UX / Signage", de: "Räumliches UX / Beschilderung" },
-    description: {
-      en: "Wayfinding system for a Swiss mountain resort covering 8km of trails, 3 cable car stations, and 2 alpine villages.",
-      de: "Wegführungssystem für ein Schweizer Bergresort mit 8 km Wegen und 3 Seilbahnstationen.",
-    },
-    tags: ["Wayfinding", "Spatial Design", "Signage", "Swiss"],
     year: "2023",
-    imagePrompt: "Swiss alpine mountain wayfinding signage system, minimal clean design, red and white, helvetica typography",
+    title: "Woyzeck in Transit",
+    role: { en: "Production Manager — Tour", de: "Produktionsleiter — Tournee" },
+    description: {
+      en: "Schaubühne Berlin's reinterpretation of Büchner's Woyzeck, reimagined for a post-pandemic world. Toured to Warsaw, Vienna, and Zurich across 32 performances.",
+      de: "Schaubühnes Neuinterpretation von Büchners Woyzeck für eine Post-Pandemie-Welt. Tournee nach Warschau, Wien und Zürich — 32 Vorstellungen.",
+    },
+    myRole: {
+      en: "Managed all touring logistics: transport contracts, international visa coordination, technical riders, and per diem management for a team of 22.",
+      de: "Gesamtlogistik der Tournee: Transportverträge, Visa-Koordination, technische Rider und Tagegeldverwaltung für 22 Personen.",
+    },
+    team: [
+      { role: { en: "Director", de: "Regisseur" }, name: "Patrick Wenzel" },
+      { role: { en: "Dramaturg", de: "Dramaturg" }, name: "Susanne Röhl" },
+      { role: { en: "Lead Actor", de: "Hauptdarsteller" }, name: "Kai Richter" },
+      { role: { en: "Choreographer", de: "Choreografin" }, name: "Adama Diallo" },
+    ],
+    images: ["project-7.jpg", "project-8.jpg", "project-9.jpg"],
   },
   {
     id: 4,
-    title: "Volta EV Platform",
-    category: { en: "Automotive UX", de: "Automotive UX" },
-    description: {
-      en: "Dashboard UX for an electric vehicle management platform. Designed real-time charging maps, trip planning, and energy analytics.",
-      de: "Dashboard-UX für eine Elektrofahrzeug-Management-Plattform mit Ladekarten und Energie-Analysen.",
-    },
-    tags: ["Automotive", "Dashboard UX", "EV", "Data Viz"],
     year: "2022",
-    imagePrompt: "Electric vehicle dashboard interface, dark theme with green accents, clean data visualization, minimal automotive UX",
+    title: "Null — Eine Bilanz",
+    role: { en: "Theatre Manager", de: "Theaterleiter" },
+    description: {
+      en: "A documentary theatre piece examining austerity and its human cost. Co-developed with an ensemble of eight actors and real testimonies from Berlin residents.",
+      de: "Ein dokumentarisches Theaterstück über Sparmaßnahmen und ihre menschlichen Folgen. Co-entwickelt mit acht Schauspielern und echten Zeugnissen Berliner Bürger.",
+    },
+    myRole: {
+      en: "Oversaw ensemble operations at Deutsches Theater, coordinated the community interview process, and managed grant reporting for two public funders.",
+      de: "Ensemble-Management am Deutschen Theater, Koordination des Gemeinschaftsinterviewprozesses, Förderberichterstattung für zwei öffentliche Förderer.",
+    },
+    team: [
+      { role: { en: "Director & Author", de: "Regisseurin & Autorin" }, name: "Carla Möbius" },
+      { role: { en: "Ensemble Member", de: "Ensemblemitglied" }, name: "Felix Braun" },
+      { role: { en: "Ensemble Member", de: "Ensemblemitglied" }, name: "Yuki Tanaka" },
+      { role: { en: "Video Artist", de: "Videokünstler" }, name: "Nico Graf" },
+    ],
+    images: ["project-10.jpg", "project-1.jpg", "project-2.jpg"],
   },
   {
     id: 5,
-    title: "Kulturbau Identity",
-    category: { en: "Brand Identity", de: "Markenidentität" },
-    description: {
-      en: "Visual identity for a Zurich-based contemporary architecture foundation. Grid-based system influenced by Swiss International Style.",
-      de: "Visuelle Identität für eine Zürcher Architekturstiftung im Schweizer Stil.",
-    },
-    tags: ["Branding", "Identity", "Print", "Architecture"],
     year: "2022",
-    imagePrompt: "Swiss modern architecture brand identity, minimal grid system, black and red typography, elegant cultural institution",
+    title: "Theatertreffen — Sondersektion",
+    role: { en: "Festival Coordinator", de: "Festivalkoordinator" },
+    description: {
+      en: "Curated a special section of Theatertreffen Berlin, presenting six international guest productions. Managed artist hospitality, technical integration, and audience programming.",
+      de: "Kuratorische Leitung einer Sondersektion des Theatertreffens Berlin mit sechs internationalen Gastspielen. Künstlerbetreuung, technische Integration und Publikumsprogramm.",
+    },
+    myRole: {
+      en: "Full coordination of six incoming productions from Poland, Belgium, and South Korea. Budget: €180,000. Audiences: 3,200 over 12 days.",
+      de: "Vollständige Koordination von sechs Gastspielen aus Polen, Belgien und Südkorea. Budget: 180.000 €. Publikum: 3.200 über 12 Tage.",
+    },
+    team: [
+      { role: { en: "Artistic Selection Committee", de: "Künstlerischer Auswahlausschuss" }, name: "Jury of 5" },
+      { role: { en: "Technical Director", de: "Technischer Direktor" }, name: "Heinrich Baum" },
+      { role: { en: "Press Officer", de: "Pressesprecherin" }, name: "Leonie Schwarz" },
+    ],
+    images: ["project-3.jpg", "project-4.jpg", "project-5.jpg"],
   },
   {
     id: 6,
-    title: "Soleil E-Commerce",
-    category: { en: "E-Commerce Design", de: "E-Commerce Design" },
+    year: "2021",
+    title: "Körper / Body",
+    role: { en: "Producer", de: "Produzent" },
     description: {
-      en: "Full UX redesign of a Swiss luxury beauty brand's e-commerce platform. Increased average order value by 28% post-launch.",
-      de: "Vollständiges UX-Redesign der E-Commerce-Plattform einer Schweizer Luxus-Beauty-Marke.",
+      en: "A contemporary dance-theatre piece exploring corporeality and identity. Presented at HAU Hebbel am Ufer, Berlin. Six sold-out performances, extended by popular demand.",
+      de: "Ein zeitgenössisches Tanztheaterstück über Körperlichkeit und Identität. Im HAU Hebbel am Ufer Berlin. Sechs ausverkaufte Vorstellungen, verlängert nach großer Nachfrage.",
     },
-    tags: ["E-Commerce", "Luxury", "UX Research", "Shopify"],
-    year: "2022",
-    imagePrompt: "Luxury beauty e-commerce website, elegant minimal design, cream and gold tones, Swiss aesthetic, clean product photography",
+    myRole: {
+      en: "Independent production from initial pitch to closing night. Sourced funding through Berliner Senat für Kultur, negotiated venue contract, and coordinated marketing.",
+      de: "Unabhängige Produktion vom Erstpitch bis zur Schlussvorstellung. Förderung über Berliner Senat für Kultur, Vertragsverhandlungen mit der Venue, Marketing-Koordination.",
+    },
+    team: [
+      { role: { en: "Choreographer & Director", de: "Choreografin & Regisseurin" }, name: "Amara Traoré" },
+      { role: { en: "Dancer", de: "Tänzer" }, name: "Paul Seidel" },
+      { role: { en: "Dancer", de: "Tänzerin" }, name: "Jana Hofer" },
+      { role: { en: "Lighting Designer", de: "Lichtdesignerin" }, name: "Ruth Engel" },
+      { role: { en: "Composer", de: "Komponist" }, name: "Samuel Obi" },
+    ],
+    images: ["project-6.jpg", "project-7.jpg", "project-8.jpg"],
   },
   {
     id: 7,
-    title: "Stadtpuls Data Dashboard",
-    category: { en: "Data Visualization", de: "Datenvisualisierung" },
+    year: "2020",
+    title: "Die Stille danach",
+    role: { en: "Production Assistant → Co-Producer", de: "Produktionsassistent → Co-Produzent" },
     description: {
-      en: "Open-data civic platform visualizing Zurich city sensor data — air quality, traffic, noise — in real-time for 200K+ citizens.",
-      de: "Offene Datenplattform für Zürich mit Echtzeitvisualisierung von Luftqualität, Verkehr und Lärm für 200K+ Bürger.",
+      en: "A pandemic-era production created in hybrid format: live performance with simultaneous livestream to 4,000 online viewers. Premiered at Volksbühne Berlin.",
+      de: "Eine Pandemie-Produktion im Hybridformat: Live-Aufführung mit simultaner Übertragung an 4.000 Online-Zuschauer. Uraufführung an der Volksbühne Berlin.",
     },
-    tags: ["Data Viz", "Civic Tech", "Open Data", "React"],
-    year: "2021",
-    imagePrompt: "City data visualization dashboard, clean minimal design, graphs and charts, red and dark blue, urban data platform",
+    myRole: {
+      en: "Managed health & safety protocols for in-person crew, coordinated with streaming technical team, and handled post-production of archive material.",
+      de: "Gesundheits- und Sicherheitsprotokolle für das Präsenz-Team, Koordination mit dem Streaming-Technikteam, Nachbereitung des Archivmaterials.",
+    },
+    team: [
+      { role: { en: "Director", de: "Regisseur" }, name: "Olaf Renz" },
+      { role: { en: "Stream Director", de: "Stream-Regisseur" }, name: "Tobias Lenz" },
+      { role: { en: "Lead Actress", de: "Hauptdarstellerin" }, name: "Miriam Koch" },
+      { role: { en: "Dramaturg", de: "Dramaturgin" }, name: "Sara Blum" },
+    ],
+    images: ["project-9.jpg", "project-10.jpg", "project-1.jpg"],
   },
   {
     id: 8,
-    title: "Almaz Health App",
-    category: { en: "Healthcare UX", de: "Healthcare UX" },
+    year: "2019",
+    title: "Schwarzer Freitag",
+    role: { en: "Production Coordinator", de: "Produktionskoordinator" },
     description: {
-      en: "Patient-facing health record and appointment management app for a chain of Swiss clinics. Designed for accessibility (WCAG AAA).",
-      de: "Patientenorientierte Gesundheitsapp für Schweizer Kliniken mit WCAG AAA-Zugänglichkeit.",
+      en: "A devised piece exploring economic anxiety in contemporary Germany. Created collaboratively over eight weeks. Performed at Theater Neukölln with community audiences.",
+      de: "Ein kollektiv erarbeitetes Stück über wirtschaftliche Angst in Deutschland. Acht Wochen Entwicklungszeit. Aufgeführt im Theater Neukölln mit Stadtteilpublikum.",
     },
-    tags: ["Healthcare", "Accessibility", "iOS", "Android"],
-    year: "2021",
-    imagePrompt: "Healthcare mobile app UI, clean white design with blue medical accents, patient portal interface, accessible design",
+    myRole: {
+      en: "Day-to-day coordination of rehearsals, budget tracking, community outreach programme, and front-of-house management during the run.",
+      de: "Tageskoordination der Proben, Budgetverfolgung, Community-Outreach-Programm und Einlassmanagement während der Laufzeit.",
+    },
+    team: [
+      { role: { en: "Director & Author", de: "Regisseur & Autor" }, name: "Martin Zeiske" },
+      { role: { en: "Actor", de: "Schauspieler" }, name: "Ben Arndt" },
+      { role: { en: "Actress", de: "Schauspielerin" }, name: "Claire Dumont" },
+      { role: { en: "Set Designer", de: "Bühnenbildnerin" }, name: "Helena Voss" },
+    ],
+    images: ["project-2.jpg", "project-3.jpg", "project-4.jpg"],
   },
   {
     id: 9,
-    title: "Typospace Editorial",
-    category: { en: "Digital Publication", de: "Digitale Publikation" },
+    year: "2018",
+    title: "Nachtstücke",
+    role: { en: "Event & Venue Manager", de: "Veranstaltungs- & Venue-Manager" },
     description: {
-      en: "Art-directed digital magazine exploring Swiss typography and design culture. Featured in Eye Magazine and Design Observed.",
-      de: "Kunstdirektierte digitale Zeitschrift über Schweizer Typografie und Designkultur.",
+      en: "A late-night performance series at Sophiensaele Berlin, pairing emerging theatre makers with composers. Six editions, twelve artists, over 800 attendees per season.",
+      de: "Eine Nachtveranstaltungsreihe in den Sophiensaelen Berlin mit Theater- und Kompositionsduos. Sechs Ausgaben, zwölf Künstler, über 800 Besucher pro Saison.",
     },
-    tags: ["Editorial Design", "Typography", "Digital Magazine"],
-    year: "2020",
-    imagePrompt: "Swiss typography digital magazine layout, editorial design, Helvetica inspired, grid system, minimal black and white with red accents",
+    myRole: {
+      en: "Conceived and managed the entire series: artist selection, scheduling, technical setup, bar & venue operations, and season marketing.",
+      de: "Konzeption und Management der gesamten Reihe: Künstlerauswahl, Terminplanung, Technik, Bar- und Venue-Betrieb und Saisonmarketing.",
+    },
+    team: [
+      { role: { en: "Artistic Co-Curator", de: "Künstlerische Co-Kuratorin" }, name: "Iris Bauer" },
+      { role: { en: "Resident Composer", de: "Resident Komponist" }, name: "Jens Mehl" },
+      { role: { en: "Technical Coordinator", de: "Technische Koordinatorin" }, name: "Petra Wolf" },
+    ],
+    images: ["project-5.jpg", "project-6.jpg", "project-7.jpg"],
   },
   {
     id: 10,
-    title: "Atlas Product OS",
-    category: { en: "Product Strategy", de: "Produktstrategie" },
+    year: "2017",
+    title: "Grenzen / Borders",
+    role: { en: "Assistant Producer", de: "Assistent Produzent" },
     description: {
-      en: "Internal operating system for product teams: unified roadmaps, OKRs, sprint planning, and stakeholder reporting in one platform.",
-      de: "Internes Betriebssystem für Produktteams mit vereinheitlichten Roadmaps, OKRs und Sprint-Planung.",
+      en: "An international co-production between Maxim Gorki Theater and partners in Istanbul and Tbilisi. Examined migration and belonging through testimonial performance.",
+      de: "Eine internationale Koproduktion des Maxim Gorki Theaters mit Partnern in Istanbul und Tiflis. Thema: Migration und Zugehörigkeit durch Zeugnistheater.",
     },
-    tags: ["Product Management", "SaaS", "B2B", "Strategy"],
-    year: "2020",
-    imagePrompt: "B2B SaaS product management platform UI, clean dashboard design, dark sidebar with white content area, professional minimal",
+    myRole: {
+      en: "Coordinated partner communications across three countries, supported international travel logistics, and assisted in grant reporting to the EU Creative Europe programme.",
+      de: "Koordination der Partnerkommunikation in drei Ländern, internationale Reiselogistik, Unterstützung bei der Berichterstattung an das EU Creative Europe-Programm.",
+    },
+    team: [
+      { role: { en: "Director", de: "Regisseurin" }, name: "Selin Yıldız" },
+      { role: { en: "Co-Director", de: "Ko-Regisseur" }, name: "Giorgi Asatiani" },
+      { role: { en: "Performer", de: "Performerin" }, name: "Nadia Müller" },
+      { role: { en: "Performer", de: "Performer" }, name: "Sasha Ibram" },
+      { role: { en: "Dramaturg", de: "Dramaturgin" }, name: "Maya Popov" },
+    ],
+    images: ["project-8.jpg", "project-9.jpg", "project-10.jpg"],
   },
 ];

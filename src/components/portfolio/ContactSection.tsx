@@ -51,28 +51,29 @@ export default function ContactSection({ lang }: ContactSectionProps) {
         >
           {/* Left */}
           <div className="md:col-span-5">
-            <span className="font-mono text-xs tracking-widest uppercase text-primary mb-4 block">
-              {lang === "en" ? "04 — Contact" : "04 — Kontakt"}
+            <span className="font-mono text-xs tracking-widest uppercase text-muted mb-4 block" style={{ color: "hsl(var(--muted-foreground))" }}>
+              {lang === "en" ? "03 — Contact" : "03 — Kontakt"}
             </span>
-            <div className="w-12 h-1 bg-primary mb-6" />
+            <div className="w-12 h-px bg-background/30 mb-6" />
             <h2
-              className="font-bold text-foreground mb-6 leading-none"
+              className="font-bold mb-6 leading-none"
               style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "hsl(var(--background))" }}
             >
               {sectionTitles.contact[lang]}
             </h2>
             <p className="text-sm leading-relaxed mb-8" style={{ color: "hsl(var(--muted-foreground))" }}>
               {lang === "en"
-                ? "Whether you have a project in mind, a question about my work, or simply want to connect — I'd love to hear from you."
-                : "Ob Sie ein Projekt im Sinn haben, eine Frage zu meiner Arbeit oder einfach in Kontakt treten möchten — ich freue mich von Ihnen zu hören."}
+                ? "Whether you have a production in mind, a collaboration proposal, or simply want to connect — I'd love to hear from you."
+                : "Ob Sie eine Produktion im Sinn haben, einen Kooperationsvorschlag oder einfach in Kontakt treten möchten — ich freue mich von Ihnen zu hören."}
             </p>
 
-            {/* Availability badge */}
-            <div className="inline-flex items-center gap-3 border border-primary px-4 py-2 text-sm">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span style={{ color: "hsl(var(--background))" }}>
-                {personalData.availability[lang]}
-              </span>
+            {/* Availability */}
+            <div
+              className="inline-flex items-center gap-3 border px-4 py-2 text-sm"
+              style={{ borderColor: "hsl(var(--background)/0.2)", color: "hsl(var(--background))" }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-background animate-pulse" />
+              {personalData.availability[lang]}
             </div>
           </div>
 
@@ -85,19 +86,20 @@ export default function ContactSection({ lang }: ContactSectionProps) {
                   href={contact.href}
                   target={contact.type !== "email" && contact.type !== "phone" ? "_blank" : undefined}
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-4 p-5 border border-border/20 hover:bg-primary transition-all duration-300"
+                  className="group flex items-center gap-4 p-5 border transition-all duration-200 hover:bg-background/10"
+                  style={{ borderColor: "hsl(var(--background)/0.15)" }}
                   initial={{ opacity: 0, y: 10 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.4, delay: 0.1 + i * 0.07 }}
                 >
-                  <span className="text-primary group-hover:text-primary-foreground transition-colors">
+                  <span style={{ color: "hsl(var(--background)/0.5)" }} className="group-hover:text-background transition-colors flex-shrink-0">
                     {getIcon(contact.type)}
                   </span>
                   <div>
-                    <p className="font-mono text-xs tracking-wide mb-0.5" style={{ color: "hsl(var(--muted-foreground))", transition: "color 0.3s" }}>
+                    <p className="font-mono text-xs tracking-wide mb-0.5" style={{ color: "hsl(var(--background)/0.4)" }}>
                       {getLabel(contact.type, lang)}
                     </p>
-                    <p className="text-sm font-medium group-hover:text-primary-foreground transition-colors" style={{ color: "hsl(var(--background))" }}>
+                    <p className="text-sm font-medium" style={{ color: "hsl(var(--background))" }}>
                       {contact.label}
                     </p>
                   </div>

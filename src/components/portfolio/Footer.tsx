@@ -15,11 +15,11 @@ export default function Footer({ lang }: FooterProps) {
           © {year} {personalData.name}. {lang === "en" ? "All rights reserved." : "Alle Rechte vorbehalten."}
         </p>
         <div className="flex items-center gap-2">
-          <span className="w-1 h-1 rounded-full bg-primary" />
+          <span className="w-1 h-1 rounded-full bg-foreground" />
           <span className="font-mono text-xs text-muted-foreground">
-            {lang === "en" ? "Swiss Made" : "Swiss Made"}
+            {lang === "en" ? "Theatre Manager & Producer" : "Theaterleiter & Produzent"}
           </span>
-          <span className="w-1 h-1 rounded-full bg-primary" />
+          <span className="w-1 h-1 rounded-full bg-foreground" />
         </div>
         <p className="font-mono text-xs text-muted-foreground">
           {personalData.location}

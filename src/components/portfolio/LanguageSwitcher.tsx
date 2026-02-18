@@ -12,7 +12,7 @@ export default function LanguageSwitcher({ lang, setLang }: LanguageSwitcherProp
         onClick={() => setLang("en")}
         className={`px-2 py-1 transition-all duration-200 ${
           lang === "en"
-            ? "text-primary font-medium"
+            ? "text-foreground font-semibold"
             : "text-muted-foreground hover:text-foreground"
         }`}
         aria-label="Switch to English"
@@ -24,7 +24,7 @@ export default function LanguageSwitcher({ lang, setLang }: LanguageSwitcherProp
         onClick={() => setLang("de")}
         className={`px-2 py-1 transition-all duration-200 ${
           lang === "de"
-            ? "text-primary font-medium"
+            ? "text-foreground font-semibold"
             : "text-muted-foreground hover:text-foreground"
         }`}
         aria-label="Zur deutschen Version wechseln"
