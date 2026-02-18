@@ -10,7 +10,6 @@ permissions:
   pages: write
   id-token: write
 
-# Добавляем настройку для предотвращения одновременных запусков
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -36,10 +35,8 @@ jobs:
           path: ./dist
 
   deploy:
-    # Именно этого блока не хватало на скриншоте image_c82e41.png
     environment:
       name: github-pages
-      url: ${{ steps: deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
