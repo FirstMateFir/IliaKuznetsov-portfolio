@@ -184,7 +184,6 @@ export default function HeroSection({ lang }: HeroSectionProps) {
     {personalData.location}
   </div>
 </div>
-          >
             <span className="w-px h-8 bg-border group-hover:bg-foreground transition-colors" />
             <ArrowDown size={15} className="scroll-indicator" />
             <span className="font-mono text-xs tracking-widest uppercase">
