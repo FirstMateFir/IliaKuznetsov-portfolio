@@ -35,6 +35,18 @@ export interface LanguageProficiency {
   note: { en: string; de: string };
 }
 
+export interface PersonalData {
+  name: string;
+  firstName: string;
+  lastName: string;
+  photo: string;
+  birthDate: string;
+  title: { en: string; de: string };
+  tagline: { en: string; de: string };
+  location: string;
+  availability: { en: string; de: string };
+}
+
 export const BIRTH_DATE = new Date(2001, 0, 5); // 05.01.2001
 
 export function calculateAge(): number {
@@ -45,7 +57,7 @@ export function calculateAge(): number {
   return age;
 }
 
-export const personalData = {
+export const personalData: PersonalData = {
   name: "Ilia Kuznetsov",
   firstName: "Ilia",
   lastName: "Kuznetsov",
