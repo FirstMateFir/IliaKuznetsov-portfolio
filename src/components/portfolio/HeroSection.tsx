@@ -165,15 +165,25 @@ export default function HeroSection({ lang }: HeroSectionProps) {
               </a>
             ))}
           </motion.div>
-
-          {/* Scroll CTA */}
-          <motion.button
-            custom={8}
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            onClick={scrollToTimeline}
-            className="group flex items-center gap-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+<div className="relative group">
+  <div className="w-56 h-72 md:w-80 md:h-[450px] overflow-hidden border border-border bg-secondary shadow-xl transition-all duration-500">
+    {personalData.photo ? (
+      <img 
+        src={personalData.photo} 
+        alt={personalData.firstName}
+        className="w-full h-full object-cover"
+      />
+    ) : (
+      <div className="w-full h-full flex items-center justify-center bg-muted">
+        <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em]">Photo</span>
+      </div>
+    )}
+  </div>
+  {/* Corner label */}
+  <div className="absolute -bottom-4 -left-4 bg-foreground text-background px-4 py-2 text-[10px] font-mono tracking-[0.2em] uppercase z-10">
+    {personalData.location}
+  </div>
+</div>
           >
             <span className="w-px h-8 bg-border group-hover:bg-foreground transition-colors" />
             <ArrowDown size={15} className="scroll-indicator" />
