@@ -137,23 +137,63 @@ export const sectionTitles = {
 
 // Unified timeline: work + education merged by year (descending)
 export const timeline: TimelineEntry[] = [
-  // --- ЗДЕСЬ БУДУТ ТВОИ 10 НОВЫХ ПРОЕКТОВ (2024-2026) ---
-
+  {
+    year: "2025 — Pres.",
+    title: { en: "Stage Manager", de: "Bühnenmanager" },
+    organization: '"Inostranka"',
+    type: "work",
+  },
+  {
+    year: "Dec 2025",
+    title: { en: "Production Assistant", de: "Produktionsassistent" },
+    organization: '"3 Days to Liberation II" by Constanza Macras (Volksbühne)',
+    type: "work",
+  },
+  {
+    year: "Sep — Nov 2025",
+    title: { en: "Production Assistant", de: "Produktionsassistent" },
+    organization: "Voices Berlin Festival",
+    type: "work",
+  },
+  {
+    year: "Feb — Sep 2025",
+    title: { en: "Stage Manager & Tour Manager", de: "Bühnenmanager & Tour Manager" },
+    organization: '"Man with No Name"',
+    type: "work",
+  },
+  {
+    year: "Sep — Nov 2024",
+    title: { en: "Production Assistant", de: "Produktionsassistent" },
+    organization: '"Nachspiel" with Klangforum Wien',
+    type: "work",
+  },
+  {
+    year: "2023 — 2025",
+    title: { en: "Executive Producer & Stage Manager", de: "Exekutivproduzent & Bühnenmanager" },
+    organization: '"Cremulator"',
+    type: "work",
+  },
+  {
+    year: "2023 — 2026",
+    title: { en: "Executive Producer & Stage Manager", de: "Exekutivproduzent & Bühnenmanager" },
+    organization: '"Leaving? Leave!"',
+    type: "work",
+  },
   {
     year: "2022 — 2025",
-    title: { en: "Producer Assistant", de: "Producer-Assistent" },
+    title: { en: "Production Assistant & Tour Manager", de: "Produktionsassistent & Tour Manager" },
     organization: '"In the Solitude of Cotton Fields"',
     type: "work",
   },
   {
     year: "2023",
-    title: { en: "Stage Manager", de: "Inspizient" },
+    title: { en: "Stage Manager", de: "Bühnenmanager" },
     organization: '"The Last Word" (Gorky Theater Berlin)',
     type: "work",
   },
   {
     year: "2022",
-    title: { en: "Theater Project Manager", de: "Theater-Projektleiter" },
+    title: { en: "Production Assistant", de: "Produktionsassistent" },
     organization: 'Summer Arts Festival "Access Point"',
     type: "work",
   },
@@ -164,12 +204,6 @@ export const timeline: TimelineEntry[] = [
     type: "work",
   },
   {
-    year: "Dec 2021",
-    title: { en: "Event Manager Assistant", de: "Event-Manager-Assistent" },
-    organization: "Gazprom-Media Holding",
-    type: "work",
-  },
-  {
     year: "2021 — 2022",
     title: { en: "Artist / Actor", de: "Künstler / Schauspieler" },
     organization: '"Demons" (Drama Theater on Bronnaya)',
@@ -177,12 +211,12 @@ export const timeline: TimelineEntry[] = [
   },
   {
     year: "2021",
-    title: { en: "Project Manager Assistant", de: "Projektmanagement-Assistent" },
+    title: { en: "Production Assistant", de: "Produktionsassistent" },
     organization: 'Festival "NET" (New European Theater)',
     type: "work",
   },
   {
-    year: "2021",
+    year: "Nov 2021",
     title: { en: "Performer", de: "Performer" },
     organization: "Sun & Sea (Venice Biennale Project)",
     type: "work",
