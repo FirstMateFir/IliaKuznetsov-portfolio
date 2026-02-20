@@ -48,7 +48,7 @@ export default function Timeline({ lang }: TimelineProps) {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.4, delay: Math.min(i * 0.04, 0.5) }}
-                className="group grid grid-cols-[60px_1fr] sm:grid-cols-[80px_1fr] gap-4 sm:gap-8 py-4 border-b border-border last:border-b-0 hover:bg-secondary transition-colors duration-150"
+                className="group grid grid-cols-[85px_1fr] sm:grid-cols-[110px_1fr] gap-4 sm:gap-8 py-4 border-b border-border last:border-b-0 hover:bg-secondary transition-colors duration-150"
               >
                 {/* Year */}
                 <div className="pt-0.5">
